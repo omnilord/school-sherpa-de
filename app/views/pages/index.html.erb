@@ -1,0 +1,57 @@
+<h1>Welcome to School Choice Sherpa</h1>
+
+
+<div class="row">
+  <div class="column">
+    <div>
+      <label for="google_place">Enter Address:</label>
+      <input name="google_place" id="google_place" type="text" class="place-autocomplete"
+             data-map="#map"
+             data-address="#geocode-address"
+             data-lat="#geocode-lat"
+             data-lng="#geocode-lng" />
+      <input name="address" id="geocode-address" type="hidden" />
+      <input name="latitude" id="geocode-lat" type="hidden" />
+      <input name="longitude" id="geocode-lng" type="hidden" />
+    </div>
+    <div>
+      <label for="grade_level">Grade Level:</label>
+      <select name="grade_level" id="grade_level">
+        <option disabled="true" selected="true">Choose One</option>
+
+        <optgroup label="Grade School">
+          <option value="kindergarten">Kindergarten</option>
+          <option value="one">First Grade</option>
+          <option value="two">Second Grade</option>
+          <option value="three">Third Grade</option>
+          <option value="four">Fourth Grade</option>
+        </optgroup>
+
+        <optgroup label="Middle School">
+          <option value="five">Fifth Grade</option>
+          <option value="six">Sixth Grade</option>
+          <option value="seven">Seventh Grade</option>
+          <option value="eight">Eighth Grade</option>
+        </optgroup>
+
+        <optgroup label="High School">
+          <option value="nine">Ninth Grade (Freshman)</option>
+          <option value="ten">Tenth Grade (Sophomore)</option>
+          <option value="eleven">Eleventh Grade (Junior)</option>
+          <option value="twelve">Twelfth Grade (Senior)</option>
+        </optgroup>
+      </select>
+    </div>
+    <div>
+      <button id="resolve_feeder_pattern" type="button">
+        Show My School
+      </button>
+    </div>
+    <div id="results">
+    </div>
+  </div>
+  <div class="column">
+    <label>Map</label>
+    <div id="map" style="height: 300px; width: 100%"></div>
+  </div>
+</div>
