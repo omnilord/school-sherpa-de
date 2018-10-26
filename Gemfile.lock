@@ -144,6 +144,8 @@ GEM
     rgeo-activerecord (6.0.0)
       activerecord (~> 5.0)
       rgeo (~> 1.0)
+    rgeo-geojson (2.0.0)
+      rgeo (~> 1.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
     sass (3.6.0)
@@ -208,6 +210,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   rails (~> 5.2.1)
+  rgeo-geojson
   sass-rails (~> 5.0)
   selenium-webdriver
   spring
