@@ -1,6 +1,7 @@
 require 'json'
+require 'rgeo/geo_json'
 
-path = '/Users/etruitte/Desktop/code/cfa/sherpa/sherpa/db/seed_files/Grade_Four.geojson'
+path = '../db/seed_files/Grade_Kindergarten.geojson'
 
 data = JSON.parse(File.read(path), symbolize_names: true)
 
@@ -23,8 +24,11 @@ data[:features].each_with_index do |feature, i|
     puts "feature[#{i}] properties is missing keys: #{missing_prop_keys.inspect}"
   end
 
+  puts "#{i}. #{feature[:properties][:SCHOOL]}"
+
   puts "feature[#{i}] geometry type is #{feature[:geometry][:type]}" unless feature[:geometry][:type] == 'Polygon'
 end
 
-puts data[:features][99][:geometry][:type]
-puts data[:features][99][:properties].inspect
+puts data[:features][12][:geometry][:type]
+puts data[:features][12][:properties].inspect
+puts RGeo::GeoJSON.decode(data[:features][12][:geometry].to_json).as_text
