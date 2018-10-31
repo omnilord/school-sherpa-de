@@ -1,5 +1,4 @@
 class FeederPattern < ApplicationRecord
-  GRADE_LEVELS = %[kindergarten one two three four five six seven eight nine ten eleven twelve]
   belongs_to :district
   belongs_to :school, optional: true
 

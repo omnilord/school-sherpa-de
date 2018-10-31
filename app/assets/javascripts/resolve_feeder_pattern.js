@@ -14,19 +14,18 @@ $(function () {
         // TODO: Show results as markers on map, zoom to fit both markers
           $('#results').html('').append(
             $('<div><small>School:</small></div>').append(
-              $('<strong></strong').text(data.school)
+              $('<strong></strong').text(data.properties.school.name)
             ),
             $('<div><small>District:</small></div>').append(
-              $('<strong></strong>').text(data.district)
+              $('<strong></strong>').text(data.properties.district.name)
             ),
           );
         } else {
           $('#results').html('<em>No schools located for given information.</em>');
         }
       })
-      .fail(function (a, b, c) {
-        // TODO: alert the end user there was a failure
-        console.log(a, b, c);
+      .fail(function (error) {
+        $('#results').html('<em style="color:#a22;">An error communicating with the server occurred.</em>');
       });
   });
 });

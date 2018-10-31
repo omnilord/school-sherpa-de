@@ -1,21 +1,18 @@
 class PatternsController < ApplicationController
   def lookup
-    unless FeederPattern::GRADE_LEVELS.include?(params[:grade_level]&.downcase)
-      gl = FeederPattern::GRADE_LEVELS.join(', ')
-      render json: { error: "Acceptable grade_level values are: #{gl}" },
+    unless School::GRADE_LEVELS.include?(params[:grade_level]&.downcase)
+      gl = School::GRADE_LEVELS.join(', ')
+      return render json: { error: "Acceptable grade_level values are: #{gl}" },
              status: :unprocessable_entity
     end
     if params[:lat].blank? || params[:lon].blank?
-      render json: { error: 'Both Latitude and Longitude must be supplied.' },
+      return render json: { error: 'Both Latitude and Longitude must be supplied.' },
              status: :unprocessable_entity
     end
 
-    feeder_school = FeederPattern.grade(params[:grade_level].downcase)
-                           .containing(params[:lat].to_f, params[:lon].to_f)
-                           .map { |fp| { school: fp.school.name,
-                                         district: fp.district.name } }
-    
-    # TODO: return GeoJSON here
-    render json: feeder_school.first
+    @feeder_pattern = FeederPattern.includes(:school)
+                      .containing(params[:lat].to_f, params[:lon].to_f)
+                      .select { |pattern| pattern.school.grade?(params[:grade_level].downcase) }
+                      .first
   end
 end
