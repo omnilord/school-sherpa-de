@@ -1,4 +1,6 @@
 class School < ApplicationRecord
+  include Geocodable
+
   belongs_to :district, optional: true
   has_many :feeder_patterns
 
