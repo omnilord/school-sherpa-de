@@ -1,7 +1,10 @@
 json.type 'Feature'
 json.geometry do
   json.type 'Point'
-  json.coordinates @feeder_pattern.school.coords
+  json.coordinates [
+    @feeder_pattern.school.lon,
+    @feeder_pattern.school.lat
+  ]
 end
 json.properties do
   json.school do
