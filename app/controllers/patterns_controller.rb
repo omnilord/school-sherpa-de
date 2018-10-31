@@ -14,5 +14,9 @@ class PatternsController < ApplicationController
                       .containing(params[:lat].to_f, params[:lon].to_f)
                       .select { |pattern| pattern.school.grade?(params[:grade_level].downcase) }
                       .first
+
+    if @feeder_pattern.nil?
+      return render json: nil, status: :not_found
+    end
   end
 end

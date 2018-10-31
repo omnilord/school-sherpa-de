@@ -10,10 +10,10 @@ $(function () {
   }
 
   function zoomToFit(markers) {
-    console.log(markers);
     var bounds = new google.maps.LatLngBounds();
     markers.forEach((m) => bounds.extend(m.getPosition()));
     map.fitBounds(bounds);
+    map.setZoom(map.getZoom() - 0.5);
   }
 
   function setMap(options) {
@@ -105,7 +105,18 @@ $(function () {
         lat: place.geometry.location.lat(),
         lng: place.geometry.location.lng()
       });
+      $('#results').html('');
     });
+
+  });
+
+  $('#grade_level').on('change', function () {
+    $('#results').html('');
+    if (marker) {
+      marker.setMap(null);
+      map.setCenter(current_location.position);
+      map.setZoom(12);
+    }
   });
 
   $('#resolve_feeder_pattern').on('click', function () {
@@ -141,11 +152,24 @@ $(function () {
             ),
           );
         } else {
-          $('#results').html('<em>No schools located for given information.</em>');
+          // This is an edge case trap
+          $('#results').html('<em style="color:#ff6347">No results found.</em>');
+          if (marker) {
+            marker.setMap(null);
+          }
         }
       })
       .fail(function (error) {
-        $('#results').html('<em style="color:#a22;">An error communicating with the server occurred.</em>');
+        if (marker) {
+          marker.setMap(null);
+          map.setCenter(current_location.position);
+          map.setZoom(12);
+        }
+        if (error.status == 404) {
+          $('#results').html('<em>No schools located for given information.</em>');
+        } else {
+          $('#results').html('<em style="color:#a22;">An error communicating with the server occurred.</em>');
+        }
       });
   });
 });
