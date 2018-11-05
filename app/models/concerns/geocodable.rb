@@ -5,9 +5,12 @@ module Geocodable
   # Geocoable Concern
   #
   # Adds geocoding to the model so that it can be managed appropriately.
+  #
+
+  ADDRESS_FIELDS = %w[addres1 address2 address city state zip postal county country]
 
   included do
-    #set_rgeo_factory_for_column(:coords, RGeo::Geographic.spherical_factory(:srid => 4326))
+    before_save :geocode, if: ->(s) { !s.geocoded? || (ADDRESS_FIELDS & s.changes.keys).length > 0 }
 
     geocoded_by :address do |obj, results|
       if geo = results.first

@@ -9,4 +9,7 @@
 
 DistrictsImporter.import
 SchoolDirectoryImporter.import
+RawFeederPatternsImporter.import
+
+# This is actually aggregator, not an importer...
 FeederPatternsImporter.import

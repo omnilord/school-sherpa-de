@@ -16,6 +16,8 @@ class SherpaImportBasics < ActiveRecord::Migration[5.2]
       t.geometry :geom, geographic: true
     end
 
+    add_index :districts, :geom, using: :gist
+
     create_table :schools do |t|
       t.text :year
       t.integer :code
@@ -44,15 +46,18 @@ class SherpaImportBasics < ActiveRecord::Migration[5.2]
     add_index :schools, [:year, :code], unique: true
 
     create_table :feeder_patterns do |t|
-      t.text :grade_level
+      t.text :grade_levels, array: true
       t.references :school, foreign_key: true
       t.references :district, foreign_key: true
       t.text :school_name
       t.text :district_name
       t.integer :dist_id
-      t.integer :code_c
+      t.text :code_c
       t.integer :code_i
       t.geometry :geom, geographic: true
     end
+
+    add_index :feeder_patterns, :geom, using: :gist
+
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_24_235837) do
+ActiveRecord::Schema.define(version: 2018_11_02_175811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,20 +31,36 @@ ActiveRecord::Schema.define(version: 2018_10_24_235837) do
     t.text "website_url"
     t.geography "geom", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
     t.index ["code"], name: "index_districts_on_code", unique: true
+    t.index ["geom"], name: "index_districts_on_geom", using: :gist
   end
 
   create_table "feeder_patterns", force: :cascade do |t|
-    t.text "grade_level"
+    t.text "grade_levels", array: true
     t.bigint "school_id"
     t.bigint "district_id"
     t.text "school_name"
     t.text "district_name"
     t.integer "dist_id"
-    t.integer "code_c"
+    t.text "code_c"
     t.integer "code_i"
     t.geography "geom", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
     t.index ["district_id"], name: "index_feeder_patterns_on_district_id"
+    t.index ["geom"], name: "index_feeder_patterns_on_geom", using: :gist
     t.index ["school_id"], name: "index_feeder_patterns_on_school_id"
+  end
+
+  create_table "raw_feeder_patterns_by_grades", primary_key: "ogc_fid", force: :cascade do |t|
+    t.integer "objectid"
+    t.text "school"
+    t.text "district"
+    t.integer "dist_id"
+    t.text "code_c"
+    t.integer "code_i"
+    t.geography "wkb_geometry", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
+    t.float "sqmiles"
+    t.text "grade_level"
+    t.index ["grade_level"], name: "index_raw_feeder_patterns_by_grades_on_grade_level"
+    t.index ["wkb_geometry"], name: "index_raw_feeder_patterns_by_grades_on_wkb_geometry", using: :gist
   end
 
   create_table "schools", force: :cascade do |t|
