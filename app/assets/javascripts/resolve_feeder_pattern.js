@@ -29,6 +29,8 @@ $(function () {
         current_location.setMap(null);
       }
       current_location = addMarker(coords, options.name || 'Location');
+      map.setCenter(current_location.position);
+      map.setZoom(12);
     }
   }
 
@@ -117,6 +119,9 @@ $(function () {
       map.setCenter(current_location.position);
       map.setZoom(12);
     }
+    if (current_location) {
+      $('#resolve_feeder_pattern').trigger('click');
+    }
   });
 
   $('#resolve_feeder_pattern').on('click', function () {
@@ -136,20 +141,16 @@ $(function () {
           }
           if (data.geometry.coordinates) {
             marker = addMarker({
-                lat: data.geometry.coordinates[1],
-                lng: data.geometry.coordinates[0]
+                lng: data.geometry.coordinates[0],
+                lat: data.geometry.coordinates[1]
               },
               data.properties.school.name
             );
             zoomToFit([current_location, marker]);
           }
           $('#results').html('').append(
-            $('<div><small>School:</small></div>').append(
-              $('<strong></strong').text(data.properties.school.name)
-            ),
-            $('<div><small>District:</small></div>').append(
-              $('<strong></strong>').text(data.properties.district.name)
-            ),
+            `<div><small>School:</small><strong>${data.properties.school.name}</strong></div>`,
+            `<div><small>District:</small><strong>${data.properties.district.name}</strong></div>`
           );
         } else {
           // This is an edge case trap
