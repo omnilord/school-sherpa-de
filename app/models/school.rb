@@ -43,7 +43,7 @@ class School < ApplicationRecord
 
   def grades
     (lowest_grade_numeric..highest_grade_numeric).map do |n|
-      [GRADE_KEYS[n], GRADE_NAMES[n]]
+      [GRADE_KEYS[n + 2], GRADE_NAMES[n + 2]]
     end
   end
 
