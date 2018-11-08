@@ -14,6 +14,8 @@ class School < ApplicationRecord
   ].freeze
   GRADE_LEVELS = GRADE_KEYS.zip(GRADE_NAMES).to_h.freeze
 
+  scope :within_radius, -> (lat, lon, r) { where(Arel.sql("ST_dwithin(schools.coords, ST_POINT(#{lon.to_f}, #{lat.to_f}), #{r.to_f})")) }
+
   def lowest_grade_numeric
     @lowest_grade_numeric ||=
       case lowest_grade
