@@ -23,6 +23,10 @@ $(function () {
       var $this = $(this);
 
       markers.forEach(function (el, i) {
+        if (!el.hasOwnProperty('label')) {
+          return; // Not all markers are pins
+        }
+
         el.visible = markers[i].visible = (data.label === el.label) || !el.visible;
         $results.find(`.school-list-item[data-label="${el.label}"]`).toggle(el.visible)
         el.marker.setMap(el.visible ? map : null);
@@ -32,10 +36,33 @@ $(function () {
     return data;
   }
 
+  // draw a circle around the current_location
+  function set_radius_circle(radius) {
+    current_location.radius_circle = new google.maps.Circle({
+      center: current_location.coords,
+      map: map,
+      radius: radius,
+      fillColor: '#FF6600',
+      fillOpacity: 0.25,
+      strokeColor: "#FFF",
+      strokeWeight: 1
+    });
+    map.fitBounds(current_location.radius_circle.getBounds());
+  }
+
+  // remove circle from around the current_location
+  function unset_radius_circle() {
+    if (current_location && current_location.radius_circle) {
+      current_location.radius_circle.setMap(null);
+      current_location.radius_circle = null;
+    }
+  }
+
   // remove all markers
   function clear_markers() {
     markers.forEach((m) => m.marker.setMap(null));
     markers = [];
+    unset_radius_circle();
     $results.html('');
   }
 
@@ -52,7 +79,8 @@ $(function () {
       coords: {
         lat: place.geometry.location.lat(),
         lng: place.geometry.location.lng()
-      }
+      },
+      radius_circle: null
     };
     current_location.marker = new google.maps.Marker({
       map: map,
@@ -70,7 +98,7 @@ $(function () {
     bounds.extend(current_location.marker.getPosition());
     markers.forEach((m) => bounds.extend(m.marker.getPosition()));
     map.fitBounds(bounds);
-    map.setZoom(map.getZoom() - 0.5);
+    map.setZoom(map.getZoom());
   }
 
   // place a marker on the map and include school in list
@@ -102,7 +130,7 @@ $(function () {
     autocomplete.addListener('place_changed', function () {
       var place = autocomplete.getPlace();
       reset_current_location(place);
-      $('button[data-require-place]').each(function () { this.disabled = false; });
+      $('[data-require-place]').each(function () { this.disabled = false; });
     });
 
     // don't submit the whole form if the user hits enter on the autocomplete
@@ -168,17 +196,20 @@ $(function () {
 
   // Show all schools with a radius of the provided address
   $('#resolve_radius').on('click', function () {
+    var radius = parseFloat($('#radius').val()) * 1609.344;
+
     if (!current_location) {
       return; // guard: home address hasn't been entered yet.
     }
 
     clear_markers();
+    set_radius_circle(radius);
 
     $.ajax({
       url: '/radius',
       dataType: 'json',
       data: {
-        radius: parseFloat($('#radius').val()) * 1609.344,
+        radius: radius,
         lat: current_location.coords.lat,
         lon: current_location.coords.lng
       }

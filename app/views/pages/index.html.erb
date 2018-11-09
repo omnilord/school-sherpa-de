@@ -13,7 +13,7 @@
       <div class="tab-view">
         <input type="radio" class="display-toggle" name="tab_toggle" id="grade_level_view" checked="checked" />
         <div class="tab">
-          <select name="grade_level" id="grade_level">
+          <select name="grade_level" id="grade_level" data-require-place="true" disabled="disabled">
             <option disabled="true" selected="true">Choose Grade</option>
             <optgroup label="Grades">
               <option value="earlychildhood">Early Childhood</option>
@@ -33,9 +33,8 @@
               <option value="twelve">Twelfth Grade (Senior)</option>
             </optgroup>
           </select>
-          <button id="resolve_feeder_pattern"
+          <button type="button" id="resolve_feeder_pattern"
                   style="width: 100%"
-                  type="button"
                   data-require-place="true"
                   disabled="disabled">
             Show My Feeder School
@@ -43,9 +42,10 @@
         </div>
       </div>
       <div class="tab-view">
-        <input type="radio" class="display-toggle" name="tab_toggle" id="radius_view" />
+        <input type="radio" name="tab_toggle" id="radius_view"
+               class="display-toggle" />
         <div class="tab">
-          <select name="radius" id="radius">
+          <select name="radius" id="radius" data-require-place="true" disabled="disabled">
             <option disabled="true" selected="true">Choose Radius</option>
             <option disabled="true">&nbsp;</option>
             <option value="0.5">1/2 Mile</option>
@@ -55,9 +55,8 @@
             <option value="3">3 Miles</option>
             <option value="5">5 Miles</option>
           </select>
-          <button id="resolve_radius"
+          <button type="button" id="resolve_radius"
                   style="width: 100%"
-                  type="button"
                   data-require-place="true"
                   disabled="disabled">
             Show Schools Near Me
