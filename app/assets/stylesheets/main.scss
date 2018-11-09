@@ -1,0 +1,68 @@
+$theme-color: #9b4dca;
+
+.tabs {
+  position: relative;
+  float: none;
+  list-style: none;
+
+  li {
+    float: left;
+  }
+
+  div.tab {
+    background-color: white;
+    border: 1px solid $theme-color;
+    display: none;
+    overflow: hidden;
+    padding: 5px;
+    width: 100%;
+  }
+
+  input.display-toggle {
+    display: none;
+
+    &:checked ~ div.tab {
+      display: block;
+    }
+  }
+
+  label {
+    background-color: $theme-color;
+    border: 1px solid $theme-color;
+    border-bottom: 0;
+    border-radius: 5px 5px 0 0;
+    color: white;
+    cursor: pointer;
+    display: block;
+    float: left;
+    margin: 5px;
+    padding: 3px;
+    position: relative;
+    top: 6px;
+    z-index: 5;
+
+    &.checked {
+      background-color: white;
+      color: $theme-color;
+    }
+  }
+}
+
+.school-list-item {
+  clear: both;
+  vertical-align: middle;
+
+  &+.school-list-item {
+    border-top: 1px solid #333;
+  }
+
+  h3 {
+    border: 1px solid $theme-color;
+    border-radius: 18px;
+    float:left;
+    margin: 10px;
+    height: 36px;
+    width: 36px;
+    text-align: center;
+  }
+}
