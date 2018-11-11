@@ -1,6 +1,6 @@
 json.name school.name
 json.address school.address
-json.grades = school.grades
+json.grades school.grades
 json.coordinates [
   school.lon,
   school.lat

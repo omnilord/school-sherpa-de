@@ -103,23 +103,75 @@ $(function () {
 
   // place a marker on the map and include school in list
   function add_feature(data) {
-    marker = add_marker({
-        lng: data.geometry.coordinates[0],
-        lat: data.geometry.coordinates[1]
-      },
-      data.properties.school.name,
-      data
-    );
+    var marker = add_marker({
+          lng: data.geometry.coordinates[0],
+          lat: data.geometry.coordinates[1]
+        },
+        data.properties.school.name,
+        data
+      ),
+      grades = data.properties.school.grades.map((el) => el[0]).join(', ');
     zoom_to_fit();
     $results.append(
       $(`<div class="school-list-item" data-label="${marker.label}"></div>`).append(
         `<h3>${marker.label}</h3>`,
         $('<div></div>').append(
-          `<div><small>School:</small><strong>${data.properties.school.name}</strong></div>`,
-          `<div><small>District:</small><strong>${data.properties.school.district.name}</strong></div>`
+          `<div><small>School: </small><strong>${data.properties.school.name}</strong></div>`,
+          `<div><small>District: </small><strong>${data.properties.school.district.name}</strong></div>`,
+          `<div><small>Grades: </small><strong>${grades}</strong></div>`
         )
       )
     );
+  }
+
+
+  function raw_geojson_query(url, added_data, success) {
+    var data = {
+          lat: current_location.coords.lat,
+          lon: current_location.coords.lng
+        };
+    if (added_data) {
+      Object.assign(data, added_data);
+    }
+
+    clear_markers();
+
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      data: data
+    })
+      .done(function (data) {
+        var found = false;
+        if (data) {
+          found = success(data);
+        }
+
+        if (found === false) {
+          // This is an edge case trap
+          $results.html('<em style="color:#ff6347">Unexpected data received from server..</em>');
+        }
+      })
+      .fail(function (error) {
+        if (error.status == 404) {
+          $results.html('<em>No schools located for given information.</em>');
+        } else {
+          $results.html('<em style="color:#a22;">An error communicating with the server occurred.</em>');
+        }
+      });
+  }
+
+  function query_patterns(url, added_data) {
+    raw_geojson_query(url, added_data, function (data) {
+      if (data.type === 'Feature') {
+        add_feature(data);
+        return true;
+      } else if (data.type === 'FeatureCollection') {
+        data.features.forEach((feature) => add_feature(feature));
+        return true;
+      }
+      return false;
+    });
   }
 
   // setup autocompletion as address is entered
@@ -152,41 +204,7 @@ $(function () {
       return; // guard: home address hasn't been entered yet.
     }
 
-    clear_markers();
-
-    $.ajax({
-      url: '/lookup',
-      dataType: 'json',
-      data: {
-        grade_level: $('#grade_level').val(),
-        lat: current_location.coords.lat,
-        lon: current_location.coords.lng
-      }
-    })
-      .done(function (data) {
-        var found = false;
-        if (data) {
-          if (data.type === 'Feature') {
-            add_feature(data);
-            found = true;
-          } else if (data.type === 'FeatureCollection') {
-            data.features.forEach((feature) => add_feature(feature));
-            found = true;
-          }
-        }
-
-        if (found === false) {
-          // This is an edge case trap
-          $results.html('<em style="color:#ff6347">No results found.</em>');
-        }
-      })
-      .fail(function (error) {
-        if (error.status == 404) {
-          $results.html('<em>No schools located for given information.</em>');
-        } else {
-          $results.html('<em style="color:#a22;">An error communicating with the server occurred.</em>');
-        }
-      });
+    query_patterns('/lookup', { grade_level: $('#grade_level').val() });
   });
 
   // automatically perform a radius lookup when the radius is select
@@ -202,31 +220,7 @@ $(function () {
       return; // guard: home address hasn't been entered yet.
     }
 
-    clear_markers();
     set_radius_circle(radius);
-
-    $.ajax({
-      url: '/radius',
-      dataType: 'json',
-      data: {
-        radius: radius,
-        lat: current_location.coords.lat,
-        lon: current_location.coords.lng
-      }
-    })
-      .done(function (data) {
-        if (data && data.type === 'FeatureCollection') {
-          data.features.forEach((feature) => add_feature(feature));
-        } else {
-          $results.html('<em style="color:#ff6347">Unexpected data received from server..</em>');
-        }
-      })
-      .fail(function (error) {
-        if (error.status == 404) {
-          $results.html('<em>No schools located for given information.</em>');
-        } else {
-          $results.html('<em style="color:#a22;">An error communicating with the server occurred.</em>');
-        }
-      });
+    query_patterns('/radius', { radius: radius });
   });
 });

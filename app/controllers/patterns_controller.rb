@@ -1,34 +1,49 @@
 class PatternsController < ApplicationController
   def lookup
     @geo_params = params_for_grade
-    @feeder_pattern = FeederPattern.includes(:school)
-                      .containing(@geo_params[:lat], @geo_params[:lon])
-                      .select { |pattern| pattern.school.grade?(@geo_params[:grade_level]) }
-                      .first
+    @feeder_patterns = FeederPattern.no_geom.includes(:school)
+                       .containing(@geo_params[:lat], @geo_params[:lon])
 
-    if @feeder_pattern.nil?
+    unless @geo_params[:grade_level] == 'all'
+      @feeder_patterns = @feeder_patterns.select { |pattern| pattern.school.grade?(@geo_params[:grade_level]) }
+    end
+
+    if @feeder_patterns.nil? || @feeder_patterns.length == 0
       return render json: nil, status: :not_found
+    else
+      @districts = @feeder_patterns.map { |fp| fp.school.district }.uniq
     end
   end
 
   def radius
     @geo_params = params_for_radius
-    @schools = School.within_radius(@geo_params[:lat].to_f,
-                                    @geo_params[:lon].to_f,
-                                    @geo_params[:radius])
+    @schools = School.no_geom.within_radius(@geo_params[:lat].to_f,
+                                            @geo_params[:lon].to_f,
+                                            @geo_params[:radius])
 
-    if @schools.nil?
+    if @schools.nil? || @schools.length == 0
       return render json: nil, status: :not_found
     else
       @districts = @schools.map(&:district).uniq
     end
   end
 
+  def district
+    @geo_params = coord_params
+    @district = District.within_radius(@geo_params[:lat].to_f,
+                                       @geo_params[:lon].to_f)
+
+    if @district.nil? || @district.length == 0
+      return render json: nil, status: :not_found
+    end
+  end
+
 private
 
   def params_for_grade
-    unless School::GRADE_LEVELS.include?(params[:grade_level]&.downcase)
-      gl = School::GRADE_LEVELS.join(', ')
+    allowed_grades = School::GRADE_KEYS + ['all']
+    unless allowed_grades.include?(params[:grade_level]&.downcase)
+      gl = School::GRADE_KEYS.join(', ')
       return render json: { error: "Acceptable grade_level values are: #{gl}" },
              status: :unprocessable_entity
     end
