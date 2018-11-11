@@ -30,11 +30,16 @@ class PatternsController < ApplicationController
 
   def district
     @geo_params = coord_params
-    @district = District.within_radius(@geo_params[:lat].to_f,
-                                       @geo_params[:lon].to_f)
+    @district = District.containing(@geo_params[:lat].to_f,
+                                    @geo_params[:lon].to_f).first
 
-    if @district.nil? || @district.length == 0
+
+    if @district.nil? #|| @district.length == 0
       return render json: nil, status: :not_found
+    else
+      # HACK: Not sure why RGeo / ActiveRecord will not work with this
+      #       field but this will shoehorn the geojson polygons out the door.
+      @raw_geojson = JSON.parse(District.raw_geom(@district.id))
     end
   end
 

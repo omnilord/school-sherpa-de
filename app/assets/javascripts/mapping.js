@@ -9,6 +9,11 @@ $(function () {
       map_el = document.getElementById('map'),
       map = new google.maps.Map(map_el, default_map_options);
 
+
+  /*
+   *  Markers are X,Y defined points
+   */
+
   // create a new marker and add it to the existing map
   function add_marker(coords, title, data) {
     data.label = labels[markers.length % labels.length];
@@ -36,6 +41,20 @@ $(function () {
     return data;
   }
 
+  // remove all markers
+  function clear_markers() {
+    markers.forEach((m) => m.marker.setMap(null));
+    markers = [];
+    unset_radius_circle();
+    remove_polygons();
+    $results.html('');
+  }
+
+
+  /*
+   *  Radius circle is a transparent geometry with a radius
+   */
+
   // draw a circle around the current_location
   function set_radius_circle(radius) {
     current_location.radius_circle = new google.maps.Circle({
@@ -58,13 +77,34 @@ $(function () {
     }
   }
 
-  // remove all markers
-  function clear_markers() {
-    markers.forEach((m) => m.marker.setMap(null));
-    markers = [];
-    unset_radius_circle();
-    $results.html('');
+
+  /*
+   *  polygons are generally irregular regions with many points
+   */
+
+  // draw a polygon (or polygons) on the map
+  function add_polygons(data) {
+    /*
+    current_location.polygons = new google.maps.Polygon({
+      paths: data.geometry,
+      fillColor: '#FF6600',
+      fillOpacity: 0.25,
+      strokeColor: "#FFF",
+      strokeWeight: 1
+    });
+    current_location.polygons.setMap(map);
+    map.fitBounds(current_location.polygons.getBounds());
+    */
+    current_location.features.push(map.data.addGeoJson(data));
   }
+
+  function remove_polygons() {
+    if (current_location && current_location.features) {
+      map.data.forEach((f) => map.data.remove(f));
+      current_location.features = [];
+    }
+  }
+
 
   // reset the map to a new location
   function reset_current_location(place) {
@@ -80,7 +120,8 @@ $(function () {
         lat: place.geometry.location.lat(),
         lng: place.geometry.location.lng()
       },
-      radius_circle: null
+      radius_circle: null,
+      features: []
     };
     current_location.marker = new google.maps.Marker({
       map: map,
@@ -124,7 +165,7 @@ $(function () {
     );
   }
 
-
+  // perform the AJAX against the backend for geojson requests
   function raw_geojson_query(url, added_data, success) {
     var data = {
           lat: current_location.coords.lat,
@@ -161,6 +202,7 @@ $(function () {
       });
   }
 
+  // wrapper function to run a geojson request and handle the response
   function query_patterns(url, added_data) {
     raw_geojson_query(url, added_data, function (data) {
       if (data.type === 'Feature') {
@@ -174,6 +216,10 @@ $(function () {
     });
   }
 
+  /*
+   *  UI event handlers
+   */
+
   // setup autocompletion as address is entered
   $('input.place-autocomplete').each(function () {
     var autocomplete = new google.maps.places.Autocomplete(this, {});
@@ -181,8 +227,12 @@ $(function () {
     // rerender the map with centered on the new location
     autocomplete.addListener('place_changed', function () {
       var place = autocomplete.getPlace();
+
       reset_current_location(place);
       $('[data-require-place]').each(function () { this.disabled = false; });
+      if (document.getElementById('district_view').checked) {
+        $('#resolve_district').trigger('click');
+      }
     });
 
     // don't submit the whole form if the user hits enter on the autocomplete
@@ -222,5 +272,26 @@ $(function () {
 
     set_radius_circle(radius);
     query_patterns('/radius', { radius: radius });
+  });
+
+  // When selecting the 'District' tab, do the polygon
+  $('input[type="radio"][name="tab_toggle"]').on('change', function () {
+    if (!current_location || this.checked === false) {
+      return; // guard: home address hasn't been entered yet.
+    }
+
+    if (this.id === 'district_view') {
+      $('#resolve_district').trigger('click');
+    }
+  });
+
+  $('#resolve_district').on('click', function () {
+    raw_geojson_query('/district', {}, function (data) {
+      if (data.type === 'Feature') {
+        add_polygons(data);
+        return true;
+      }
+      return false;
+    });
   });
 });

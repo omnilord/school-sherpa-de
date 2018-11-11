@@ -10,6 +10,7 @@
     <div class="tabs" role="tablist">
       <label for="grade_level_view" role="tab" class="checked">Grade Level</label>
       <label for="radius_view" role="tab">Radius From Address</label>
+      <label for="district_view" role="tab">District</label>
       <div class="tab-view">
         <input type="radio" class="display-toggle" name="tab_toggle" id="grade_level_view" checked="checked" />
         <div class="tab">
@@ -60,6 +61,17 @@
                   data-require-place="true"
                   disabled="disabled">
             Show Schools Near Me
+          </button>
+        </div>
+      </div>
+      <div class="tab-view">
+        <input type="radio" name="tab_toggle" id="district_view" class="display-toggle" />
+        <div class="tab">
+          <button type="button" id="resolve_district"
+                  style="width: 100%"
+                  data-require-place="true"
+                  disabled="disabled">
+            Show School District Area
           </button>
         </div>
       </div>
