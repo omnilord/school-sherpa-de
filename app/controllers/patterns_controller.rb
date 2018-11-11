@@ -3,6 +3,7 @@ class PatternsController < ApplicationController
     @geo_params = params_for_grade
     @feeder_patterns = FeederPattern.no_geom.includes(:school)
                        .containing(@geo_params[:lat], @geo_params[:lon])
+                       .sort_by { |fp| School::GRADE_KEYS.index(fp.grade_levels.first) }
 
     unless @geo_params[:grade_level] == 'all'
       @feeder_patterns = @feeder_patterns.select { |pattern| pattern.school.grade?(@geo_params[:grade_level]) }
