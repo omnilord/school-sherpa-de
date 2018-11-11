@@ -84,18 +84,14 @@ $(function () {
 
   // draw a polygon (or polygons) on the map
   function add_polygons(data) {
-    /*
-    current_location.polygons = new google.maps.Polygon({
-      paths: data.geometry,
-      fillColor: '#FF6600',
-      fillOpacity: 0.25,
-      strokeColor: "#FFF",
-      strokeWeight: 1
-    });
-    current_location.polygons.setMap(map);
-    map.fitBounds(current_location.polygons.getBounds());
-    */
-    current_location.features.push(map.data.addGeoJson(data));
+    var bounds = new google.maps.LatLngBounds(),
+        features = map.data.addGeoJson(data);
+
+    current_location.features.push(features);
+    features.forEach((f) => f.getGeometry().forEachLatLng((latlng) => {
+      bounds.extend(latlng);
+    }));
+    map.fitBounds(bounds);
   }
 
   function remove_polygons() {
@@ -139,7 +135,6 @@ $(function () {
     bounds.extend(current_location.marker.getPosition());
     markers.forEach((m) => bounds.extend(m.marker.getPosition()));
     map.fitBounds(bounds);
-    map.setZoom(map.getZoom());
   }
 
   // place a marker on the map and include school in list
