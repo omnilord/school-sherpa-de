@@ -104,6 +104,7 @@ $(function () {
 
   // reset the map to a new location
   function reset_current_location(place) {
+    reset_selection_controls();
     clear_markers();
 
     if (current_location) {
@@ -217,14 +218,15 @@ $(function () {
 
   // setup autocompletion as address is entered
   $('input.place-autocomplete').each(function () {
-    var autocomplete = new google.maps.places.Autocomplete(this, {});
+    var $this = $(this), autocomplete = new google.maps.places.Autocomplete(this, {});
 
     // rerender the map with centered on the new location
     autocomplete.addListener('place_changed', function () {
       var place = autocomplete.getPlace();
 
       reset_current_location(place);
-      $('[data-require-place]').each(function () { this.disabled = false; });
+
+      $this.closest('div').addClass('place-completed');
       if (document.getElementById('district_view').checked) {
         $('#resolve_district').trigger('click');
       }

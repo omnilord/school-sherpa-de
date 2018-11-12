@@ -3,18 +3,20 @@
 <div class="row">
   <div class="column">
     <div>
-      <label for="google_place">Enter Address:</label>
+      <h3>Step 1 - Enter Address:</h3>
       <input name="google_place" id="google_place" type="text" class="place-autocomplete" />
     </div>
 
     <div class="tabs" role="tablist">
-      <label for="grade_level_view" role="tab" class="checked">Grade Level</label>
+      <h3>Step 2 - Choose An Operation:</h3>
+      <label for="grade_level_view" role="tab">Grade Level</label>
       <label for="radius_view" role="tab">Radius From Address</label>
       <label for="district_view" role="tab">District</label>
       <div class="tab-view">
-        <input type="radio" class="display-toggle" name="tab_toggle" id="grade_level_view" checked="checked" />
+        <input type="radio" class="display-toggle" name="tab_toggle" id="grade_level_view" />
         <div class="tab">
-          <select name="grade_level" id="grade_level" data-require-place="true" disabled="disabled">
+          <h3>Step 3:</h3>
+          <select name="grade_level" id="grade_level" data-require-place="true">
             <option disabled="true" selected="true">Choose Grade</option>
             <option value="all">All Feeder Schools</option>
             <optgroup label="Grades">
@@ -46,7 +48,8 @@
       <div class="tab-view">
         <input type="radio" name="tab_toggle" id="radius_view" class="display-toggle" />
         <div class="tab">
-          <select name="radius" id="radius" data-require-place="true" disabled="disabled">
+          <h3>Step 3:</h3>
+          <select name="radius" id="radius" data-require-place="true">
             <option disabled="true" selected="true">Choose Radius</option>
             <option disabled="true">&nbsp;</option>
             <option value="0.5">1/2 Mile</option>
@@ -67,10 +70,10 @@
       <div class="tab-view">
         <input type="radio" name="tab_toggle" id="district_view" class="display-toggle" />
         <div class="tab">
+          <h3>Step 3:</h3>
           <button type="button" id="resolve_district"
                   style="width: 100%"
-                  data-require-place="true"
-                  disabled="disabled">
+                  data-require-place="true">
             Show School District Area
           </button>
         </div>

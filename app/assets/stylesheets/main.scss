@@ -1,6 +1,11 @@
 $theme-color: #9b4dca;
 
 .tabs {
+  display: none;
+}
+
+.place-completed ~ .tabs {
+  display: block;
   position: relative;
   float: none;
   list-style: none;
