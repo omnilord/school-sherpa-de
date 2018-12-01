@@ -1,5 +1,7 @@
 class SherpaImportBasics < ActiveRecord::Migration[5.2]
   def change
+    enable_extension 'postgis'
+
     create_table :districts do |t|
       t.integer :code, index: { unique: true }
       t.text :name

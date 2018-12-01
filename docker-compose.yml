@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    entrypoint: ['./docker_entrypoint.sh']
+    command: ['bundle', 'exec', 'rails', 'server']
+    environment:
+      RAILS_ENV: development
+      RAKE_ENV: development
+      DATABASE_URL: "postgres://sherpa:sherpa@postgresql:5432/sherpa_${RAILS_ENV}"
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    volumes:
+      - ./app:/usr/src/app/app
+      - ./lib:/usr/src/app/lib
+      - ./db:/usr/src/app/db
+      - ./public:/usr/src/app/public
+    links:
+      - postgresql
+    depends_on:
+      - postgresql
+  postgresql:
+    container_name: postgresql
+    image: mdillon/postgis:10
+    environment:
+      POSTGRES_USER: 'sherpa'
+      POSTGRES_PASSWORD: 'sherpa'
+      POSTGRES_DB: "sherpa_${RAILS_ENV}"
+    ports:
+      - 5432:5432
+      - 5555:5432
+    expose:
+      - 5555
+    restart: always
