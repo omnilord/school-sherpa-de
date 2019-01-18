@@ -8,27 +8,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Quicksand:300,300italic,700,700italic">
     <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
-    <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <div class="container">
-      <%= yield %>
+    <div class="sherpa container">
+      <div class="banner row">
+        <div class="col-12 text-center p-3">
+          <%= link_to(root_path,  class: 'titling') do %>
+            <%= image_tag('logo_title', height: 100, width: 300, alt: 'School Choice SHERPA') %>
+            <h1>School Choice SHERPA</h1>
+          <% end %>
+        </div>
+      </div>
+      <div class="body row justify-content-center p-5">
+<%= yield %>
+      </div>
+      <div class="banner row">
+        <div class="col-12 text-center m-3">
+          <%= link_to(root_path) do %>
+            <%= image_tag('logo', height: '70', width: '50') %>
+          <% end %>
+        </div>
+      </div>
     </div>
 
-    <footer>
+    <footer class="text-center">
       Code is available at <a href="http://github.com/omnilord/school-sherpa-de">GitHub</a>. Contributors welcome!
     </footer>
-
-    <% if ENV["GOOGLE_MAPS_JS_API_KEY"].blank? %>
-    <script>console.log("To enable the Google auto-complete, you'll need to set a google maps API key in .env")</script>
-    <% else %>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_JS_API_KEY'] %>&libraries=places"></script>
-    <% end %>
   </body>
 </html>

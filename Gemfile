@@ -16,6 +16,10 @@ gem 'dotenv-rails'
 
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
+gem 'bootstrap', '~> 4.1.3'
+gem 'jquery-rails'
+gem 'font-awesome-rails'
+
 # gem 'redis', '~> 4.0'
 # gem 'bcrypt', '~> 3.1.7'
 

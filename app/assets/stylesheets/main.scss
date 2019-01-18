@@ -1,4 +1,148 @@
-$theme-color: #9b4dca;
+$banner_color: #f3e195;
+$backing_color: #fff;
+$body_color: #e0eaea;
+$front_color: #89b0b0;
+
+* {
+  font-family: roboto;
+}
+
+.collapsing {
+  -webkit-transition: none;
+  transition: none;
+  display: none;
+}
+
+[data-toggle="collapse"]:after {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f054";
+  transform: rotate(-90deg) ;
+  transition: all linear 0.25s;
+
+  &:active, &:hover, &:visited {
+    text-decoration: none;
+  }
+}
+
+[data-toggle="collapse"].collapsed:after {
+  transform: rotate(90deg) ;
+}
+
+.sherpa {
+  .banner {
+    background-color: $banner_color;
+    color: $body_color;
+    text-align: center;
+
+    .titling {
+      font-family: Quicksand;
+      font-weight: 700;
+      text-decoration: none;
+      color: $front-color;
+
+      h1 {
+        display: none;
+      }
+    }
+  }
+
+  .body {
+    background-color: $backing_color;
+    color: #121212;
+
+    .round-container {
+      border-radius: 25px;
+      background-color: $body_color;
+      width: 75%;
+
+      .nav-item {
+        height: 140px;
+        width: 140px;
+        padding: 10px;
+        border-radius: 70px;
+        background-color: $front_color;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        text-decoration: none;
+
+        .nav-icon {
+          height: 110px;
+          width: 110px;
+        }
+
+        .nav-label {
+          background-color: $banner_color;
+          color: $front_color;
+          border-radius: 10px;
+          padding: 5px;
+          height: 55px;
+          width: 160px;
+          z-index: 10;
+          position: relative;
+          left: -20px;
+        }
+      }
+/*
+      .inner-title {
+        h2 {
+          background-color: $banner_color;
+          border-radius: 20px;
+          float: right;
+          height: 50px;
+          left: 40px;
+          line-height: 40px;
+          padding: 5px 20px 5px 50px;
+          position: relative;
+          top: -45px;
+        }
+
+        .nav-item {
+          float: left;
+          height: 100px;
+          left: 70px;
+          position: relative;
+          top: -75px;
+          width: 100px;
+          z-index: 10;
+
+          .nav-icon {
+            height: 75px;
+            width: 75px;
+          }
+        }
+      }
+*/
+      .info-blurb {
+        border-radius: 10px;
+        background-color: $banner_color;
+        display: block;
+        padding: 5px;
+        position: static;
+      }
+    }
+  }
+}
+
+@media (max-width: 991.98px) {
+  .sherpa .body .round-container > div.nav_responsive:nth-child(n+2) {
+    border-top: 1px solid $front_color;
+    margin-top: 60px;
+    padding-top: 20px;
+  }
+}
+
+@media (min-width: 992px) {
+  .sherpa .body .round-container > div.nav_responsive:nth-child(n+2) {
+    border-left: 1px solid $front_color;
+  }
+}
 
 .tabs {
   display: none;
@@ -16,7 +160,7 @@ $theme-color: #9b4dca;
 
   div.tab {
     background-color: white;
-    border: 1px solid $theme-color;
+    border: 1px solid $banner-color;
     display: none;
     overflow: hidden;
     padding: 5px;
@@ -32,11 +176,11 @@ $theme-color: #9b4dca;
   }
 
   label {
-    background-color: $theme-color;
-    border: 1px solid $theme-color;
+    background-color: $banner-color;
+    border: 1px solid $banner-color;
     border-bottom: 0;
     border-radius: 5px 5px 0 0;
-    color: white;
+    color: $front-color;
     cursor: pointer;
     display: block;
     float: left;
@@ -48,26 +192,46 @@ $theme-color: #9b4dca;
 
     &.checked {
       background-color: white;
-      color: $theme-color;
+      color: $front-color;
     }
   }
 }
 
+#results:not(:empty) {
+  margin: 15px;
+  padding-top: 15px;
+  border-top: 3px solid black;
+}
+
 .school-list-item {
-  clear: both;
   vertical-align: middle;
 
-  &+.school-list-item {
-    border-top: 1px solid #333;
+  &:nth-child(n+2) {
+    border-top: 1px solid $front-color;
   }
 
   h3 {
-    border: 1px solid $theme-color;
+    border: 1px solid $banner-color;
     border-radius: 18px;
     float:left;
     margin: 10px;
     height: 36px;
     width: 36px;
     text-align: center;
+  }
+
+  .school-info-tip {
+    font-size: 12px;
+    font-style: italic;
+    display: none;
+  }
+
+  &:hover {
+    background-color: darken($body-color, 15%);
+    cursor: pointer;
+
+    .school-info-tip {
+      display: inline;
+    }
   }
 }

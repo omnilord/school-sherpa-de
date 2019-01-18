@@ -1,90 +1,33 @@
-<h1>Welcome to School Choice Sherpa</h1>
+<h2 class="text-center">Navigate School Choice in Delaware?</h2>
 
-<div class="row">
-  <div class="column">
-    <div>
-      <h3>Step 1 - Enter Address:</h3>
-      <input name="google_place" id="google_place" type="text" class="place-autocomplete" />
-    </div>
-
-    <div class="tabs" role="tablist">
-      <h3>Step 2 - Choose An Operation:</h3>
-      <label for="grade_level_view" role="tab">Grade Level</label>
-      <label for="radius_view" role="tab">Radius From Address</label>
-      <label for="district_view" role="tab">District</label>
-      <div class="tab-view">
-        <input type="radio" class="display-toggle" name="tab_toggle" id="grade_level_view" />
-        <div class="tab">
-          <h3>Step 3:</h3>
-          <select name="grade_level" id="grade_level" data-require-place="true">
-            <option disabled="true" selected="true">Choose Grade</option>
-            <option value="all">All Feeder Schools</option>
-            <optgroup label="Grades">
-              <option value="earlychildhood">Early Childhood</option>
-              <option value="prekindergarten">Pre-Kindergarten</option>
-              <option value="kindergarten">Kindergarten</option>
-              <option value="one">First Grade</option>
-              <option value="two">Second Grade</option>
-              <option value="three">Third Grade</option>
-              <option value="four">Fourth Grade</option>
-              <option value="five">Fifth Grade</option>
-              <option value="six">Sixth Grade</option>
-              <option value="seven">Seventh Grade</option>
-              <option value="eight">Eighth Grade</option>
-              <option value="nine">Ninth Grade (Freshman)</option>
-              <option value="ten">Tenth Grade (Sophomore)</option>
-              <option value="eleven">Eleventh Grade (Junior)</option>
-              <option value="twelve">Twelfth Grade (Senior)</option>
-            </optgroup>
-          </select>
-          <button type="button" id="resolve_feeder_pattern"
-                  style="width: 100%"
-                  data-require-place="true"
-                  disabled="disabled">
-            Show My Feeder School
-          </button>
-        </div>
+<div class="round-container row justify-content-center p-4 pb-5">
+  <div class="col-12 col-lg-4 text-center nav_responsive">
+    <%= link_to(learn_path, class: 'nav-item') do %>
+      <%= image_tag('sherpa_icons-01.png', class: 'nav-icon') %>
+      <div class="nav-label">
+        Learn About School Choice
       </div>
-      <div class="tab-view">
-        <input type="radio" name="tab_toggle" id="radius_view" class="display-toggle" />
-        <div class="tab">
-          <h3>Step 3:</h3>
-          <select name="radius" id="radius" data-require-place="true">
-            <option disabled="true" selected="true">Choose Radius</option>
-            <option disabled="true">&nbsp;</option>
-            <option value="0.5">1/2 Mile</option>
-            <option value="1">1 Mile</option>
-            <option value="1.5">1 1/2 Miles</option>
-            <option value="2">2 Miles</option>
-            <option value="3">3 Miles</option>
-            <option value="5">5 Miles</option>
-          </select>
-          <button type="button" id="resolve_radius"
-                  style="width: 100%"
-                  data-require-place="true"
-                  disabled="disabled">
-            Show Schools Near Me
-          </button>
-        </div>
-      </div>
-      <div class="tab-view">
-        <input type="radio" name="tab_toggle" id="district_view" class="display-toggle" />
-        <div class="tab">
-          <h3>Step 3:</h3>
-          <button type="button" id="resolve_district"
-                  style="width: 100%"
-                  data-require-place="true">
-            Show School District Area
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div id="results">
-    </div>
+    <% end %>
   </div>
-  <div class="column">
-    <label>Map</label>
-    <div id="map" style="height: 300px; width: 100%"></div>
+  <div class="col-12 col-lg-4 text-center nav_responsive">
+    <%= link_to(search_path, class: 'nav-item') do %>
+      <%= image_tag('sherpa_icons-02.png', class: 'nav-icon') %>
+      <div class="nav-label">
+        Search for Schools
+      </div>
+    <% end %>
+  </div>
+  <div class="col-12 col-lg-4 text-center nav_responsive">
+    <%= link_to(apply_path, class: 'nav-item') do %>
+      <%= image_tag('sherpa_icons-03.png', class: 'nav-icon') %>
+      <div class="nav-label">
+        Apply to a School
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <hr class="" />
   </div>
 </div>
