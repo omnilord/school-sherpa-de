@@ -1,12 +1,5 @@
-var __sherpa_has_loaded_once = false;
-
 function initMap() {
   console.log('Loading map');
-  if (__sherpa_has_loaded_once) {
-    return;
-  } else {
-    __sherpa_has_loaded_once = true;
-  }
 
   $(function () {
     var current_location, markers = [],

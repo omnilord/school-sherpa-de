@@ -1,5 +1,5 @@
     <% if ENV["GOOGLE_MAPS_JS_API_KEY"].blank? %>
     <script>console.log("To enable the Google auto-complete, you'll need to set a google maps API key in .env")</script>
     <% else %>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_JS_API_KEY'] %>&libraries=places&callback=initMap" data-turbolinks-track="reload"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_JS_API_KEY'] %>&libraries=places" data-turbolinks-track="reload"></script>
     <% end %>
