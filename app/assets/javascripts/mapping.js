@@ -154,8 +154,8 @@ function initMap() {
       zoom_to_fit();
       $results.append(
         $('<div class="row school-list-item"></div>').append([
-          $(`<div class="col-10 school-list-item-data" data-label="${marker.label}"></div>`).append(
-            `<h3>${marker.label}</h3>`,
+          `<div class="col-1"><h3>${marker.label}</h3></div>`,
+          $(`<div class="col-9 school-list-item-data" data-label="${marker.label}"></div>`).append(
             $('<div></div>').append(
               `<div><small>School: </small><strong>${data.properties.school.name}</strong></div>`,
               `<div><small>District: </small><strong>${data.properties.school.district.name}</strong></div>`,
@@ -163,7 +163,7 @@ function initMap() {
             )
           ),
           $('<div class="col-2 school-list-item-info"></div>').append(
-            '<span class="align-middle school-info-tip">Click to view<br/>school profile</span>'
+            '<span class="align-middle school-info-tip">Click to view<br/>school profile</span>&nbsp;'
           )
         ])
       );
