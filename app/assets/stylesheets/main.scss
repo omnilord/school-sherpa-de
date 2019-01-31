@@ -44,7 +44,7 @@ $front_color: #89b0b0;
       font-family: Quicksand;
       font-weight: 700;
       text-decoration: none;
-      color: $front-color;
+      color: $front_color;
 
       h1 {
         display: none;
@@ -89,11 +89,24 @@ $front_color: #89b0b0;
       }
 
       .info-blurb {
-        border-radius: 10px;
+        border-radius: 20px;
         background-color: $banner_color;
+        box-shadow: 0 0 8px #999;
         display: block;
         padding: 5px;
         position: static;
+      }
+
+      .info-nav {
+        border-radius: 25px;
+        background-color: $front_color;
+        box-shadow: 0 0 8px #999;
+        color: $banner_color;
+        display: block;
+        font-weight: bold;
+        font-size: 18pt;
+        position: static;
+        text-align: center;
       }
     }
   }
@@ -112,19 +125,65 @@ $front_color: #89b0b0;
     margin-top: 60px;
     padding-top: 20px;
   }
+
+  .learning-page {
+    grid-gap: 0px 0px;
+    grid-template-columns: 10px auto 10px;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      ". l ."
+      ". t ."
+      ". b ."
+      ". n .";
+  }
 }
 
 @media (min-width: 992px) {
   .sherpa .body .round-container > div.nav_responsive:nth-child(n+2) {
     border-left: 1px solid $front_color;
   }
+
+  .learning-page {
+    grid-gap: 20px 10px;
+    grid-template-columns: 10px 1fr 10px 1fr 10px ;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      ". l . t ."
+      ". l . b ."
+      ". . n n n";
+  }
 }
 
-.tabs {
+.learning-page {
+  display: grid !important;
+  justify-items: stretch;
+  align-items: stretch;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  .learning {
+    &.learning-left {
+      grid-area: l;
+    }
+
+    &.learning-right-top {
+      grid-area: t;
+    }
+
+    &.learning-right-bottom {
+      grid-area: b;
+    }
+  }
+
+  .learning-next {
+    grid-area: n;
+  }
+}
+
+.mapping-operations {
   display: none;
 }
 
-.place-completed ~ .tabs {
+.place-completed ~ .mapping-operations {
   display: block;
   position: relative;
   float: none;
@@ -134,21 +193,12 @@ $front_color: #89b0b0;
     float: left;
   }
 
-  div.tab {
+  .operation {
     background-color: white;
     border: 1px solid $banner-color;
-    display: none;
     overflow: hidden;
     padding: 5px;
     width: 100%;
-  }
-
-  input.display-toggle {
-    display: none;
-
-    &:checked ~ div.tab {
-      display: block;
-    }
   }
 
   label {
@@ -202,7 +252,7 @@ $front_color: #89b0b0;
   }
 
   &:hover {
-    background-color: darken($body-color, 15%);
+    background-color: darken($body_color, 15%);
     cursor: pointer;
 
     .school-info-tip {

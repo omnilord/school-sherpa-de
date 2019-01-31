@@ -7,14 +7,14 @@
       <input name="google_place" id="google_place" type="text" class="place-autocomplete form-control" />
     </div>
 
-    <div class="tabs" role="tablist">
+    <div class="tabs mapping-operations" role="tablist">
       <h3>Step 2 - Choose An Operation:</h3>
       <label for="grade_level_view" role="tab">By Grade</label>
       <label for="radius_view" role="tab">By Radius</label>
       <label for="district_view" role="tab">District</label>
-      <div class="tab-view">
+      <div class="tab">
         <input type="radio" class="display-toggle" name="tab_toggle" id="grade_level_view" />
-        <div class="tab">
+        <div class="tab-view operation">
           <h3>Step 3:</h3>
           <select name="grade_level" id="grade_level" class="form-control" data-require-place="true">
             <option disabled="true" selected="true">Choose Grade</option>
@@ -45,9 +45,9 @@
           </button>
         </div>
       </div>
-      <div class="tab-view">
+      <div class="tab">
         <input type="radio" name="tab_toggle" id="radius_view" class="display-toggle" />
-        <div class="tab">
+        <div class="tab-view operation">
           <h3>Step 3:</h3>
           <select name="radius" id="radius" class="form-control" data-require-place="true">
             <option disabled="true" selected="true">Choose Radius</option>
@@ -67,9 +67,9 @@
           </button>
         </div>
       </div>
-      <div class="tab-view">
+      <div class="tab">
         <input type="radio" name="tab_toggle" id="district_view" class="display-toggle" />
-        <div class="tab">
+        <div class="tab-view operation">
           <h3>Step 3:</h3>
           <button type="button" id="resolve_district"
                   style="width: 100%"

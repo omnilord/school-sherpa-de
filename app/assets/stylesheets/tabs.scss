@@ -1,0 +1,13 @@
+.tabs > .tab {
+  div.tab-view {
+    display: none;
+  }
+
+  input.display-toggle {
+    display: none;
+
+    &:checked ~ div.tab-view {
+      display: block;
+    }
+  }
+}
