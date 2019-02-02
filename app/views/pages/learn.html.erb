@@ -1,7 +1,22 @@
 <h2>Learn About School Choice</h2>
 
-<div class="round-container row justify-content-center mt-3 p-4 pb-5">
-  <div class="info-blurb">
-    Comming Soon...
-  </div>
+<div class="round-container row justify-content-center mt-3 p-4">
+  <%= render 'app/tabview', path_prefix: 'pages/learn/',
+                            tabs: %w[page0 page1 page2 page3 page4 page5 page6],
+                            default_tab: 'page0' %>
 </div>
+
+<script charset="utf-8">
+$(function () {
+  var hash = location.hash.slice(1),
+      navs = $('label.info-nav').on('click', function () {
+        var nav_hash = $(this).attr('for');
+        if (nav_hash != hash) {
+          location.hash = hash = nav_hash;
+        }
+      });
+  if (hash != '') {
+    navs.filter('[for="' + hash + '"]').trigger('click');
+  }
+});
+</script>

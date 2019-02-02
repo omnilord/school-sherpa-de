@@ -1,0 +1,14 @@
+<div class="tabs" role="tablist">
+<% tabs.each do |tab_name| %>
+  <div class="tab">
+    <input type="radio" <%= (tab_name == default_tab) ? 'checked="checked"'.html_safe : '' %>
+           class="display-toggle"
+           name="tab_toggle"
+           aria-hidden="true"
+           id="<%= tab_name %>" />
+    <div class="tab-view">
+<%= render "#{path_prefix}#{tab_name}" %>
+    </div>
+  </div>
+<% end %>
+</div>

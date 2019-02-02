@@ -89,7 +89,6 @@ $front_color: #89b0b0;
       }
 
       .info-blurb {
-        border-radius: 20px;
         background-color: $banner_color;
         box-shadow: 0 0 8px #999;
         display: block;
@@ -105,7 +104,6 @@ $front_color: #89b0b0;
         display: block;
         font-weight: bold;
         font-size: 18pt;
-        position: static;
         text-align: center;
       }
     }
@@ -114,8 +112,12 @@ $front_color: #89b0b0;
 
 @media (min-width: 576px) {
   .sherpa .body .round-container {
-    border-radius: 25px;
+    border-radius: 30px;
     width: 75%;
+
+    .info-blurb {
+      border-radius: 30px;
+    }
   }
 }
 
@@ -127,14 +129,29 @@ $front_color: #89b0b0;
   }
 
   .learning-page {
-    grid-gap: 0px 0px;
-    grid-template-columns: 10px auto 10px;
-    grid-template-rows: auto auto auto auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
     grid-template-areas:
-      ". l ."
-      ". t ."
-      ". b ."
-      ". n .";
+      "body"
+      "next"
+      "prev";
+
+    .learning-page-0 {
+      grid-gap: 10px;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+      grid-template-areas:
+        "l"
+        "t"
+        "b";
+    }
+
+    .learning-page-1 {}
+    .learning-page-2 {}
+    .learning-page-3 {}
+    .learning-page-4 {}
+    .learning-page-5 {}
+    .learning-page-6 {}
   }
 }
 
@@ -144,13 +161,28 @@ $front_color: #89b0b0;
   }
 
   .learning-page {
-    grid-gap: 20px 10px;
-    grid-template-columns: 10px 1fr 10px 1fr 10px ;
-    grid-template-rows: auto auto auto;
+    grid-template-columns: 10px 1fr 1fr 10px;
+    grid-template-rows: auto 76px;
     grid-template-areas:
-      ". l . t ."
-      ". l . b ."
-      ". . n n n";
+         ". body body ."
+      "prev prev next next";
+    grid-gap: 20px;
+
+    .learning-page-0 {
+      grid-gap: 10px;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas:
+        "l t"
+        "l b";
+    }
+
+    .learning-page-1 {}
+    .learning-page-2 {}
+    .learning-page-3 {}
+    .learning-page-4 {}
+    .learning-page-5 {}
+    .learning-page-6 {}
   }
 }
 
@@ -158,24 +190,68 @@ $front_color: #89b0b0;
   display: grid !important;
   justify-items: stretch;
   align-items: stretch;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 
-  .learning {
-    &.learning-left {
+  .learning-page-0 {
+    width: 100%;
+    display: grid !important;
+    justify-items: stretch;
+    align-items: stretch;
+
+    .learning-left {
       grid-area: l;
     }
 
-    &.learning-right-top {
+    .learning-right-top {
       grid-area: t;
     }
 
-    &.learning-right-bottom {
+    .learning-right-bottom {
       grid-area: b;
     }
   }
 
+  .learning-page-1 {}
+  .learning-page-2 {}
+  .learning-page-3 {}
+  .learning-page-4 {}
+  .learning-page-5 {}
+  .learning-page-6 {}
+
+  .learning-body {
+    grid-area: body;
+
+    .learning-header {
+      width: 100%;
+
+      .learning-step {
+        width: 100px;
+        height: 100px;
+        background-color: $banner_color;
+        border-radius: 50px;
+        box-shadow: 0 0 8px #999;
+        float: left;
+        font-family: Quicksand;
+        font-size: 60px;
+        font-weight: bold;
+        line-height: 100px;
+        position: relative;
+        text-align: center;
+        top: -25px;
+        z-index: 2;
+      }
+
+      .learning-title {
+        z-index: 1;
+      }
+    }
+  }
+
+  .learning-prev {
+    grid-area: prev;
+  }
+
   .learning-next {
-    grid-area: n;
+    grid-area: next;
   }
 }
 
