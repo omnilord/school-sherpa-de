@@ -106,6 +106,10 @@ $front_color: #89b0b0;
         font-weight: bold;
         font-size: 18pt;
         text-align: center;
+
+        &:hover {
+          box-shadow: 0 0 8px #fff;
+        }
       }
     }
   }
@@ -137,6 +141,7 @@ $front_color: #89b0b0;
       "next"
       "prev";
 
+    .learning-intro {}
     .learning-page-0 {
       grid-gap: 10px;
       grid-template-columns: 1fr;
@@ -169,6 +174,7 @@ $front_color: #89b0b0;
       "prev prev next next";
     grid-gap: 20px;
 
+    .learning-intro {}
     .learning-page-0 {
       grid-gap: 10px;
       grid-template-columns: 1fr 1fr;
@@ -211,6 +217,7 @@ $front_color: #89b0b0;
     }
   }
 
+  .learning-intro {}
   .learning-page-1 {}
   .learning-page-2 {}
   .learning-page-3 {}
@@ -249,10 +256,18 @@ $front_color: #89b0b0;
 
   .learning-prev {
     grid-area: prev;
+
+    &:before {
+      content: 'Previous Step: ';
+    }
   }
 
   .learning-next {
     grid-area: next;
+
+    &:before {
+      content: 'Next Step: ';
+    }
   }
 }
 
