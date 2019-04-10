@@ -3,27 +3,29 @@
 <div class="round-container row justify-content-center p-4 pb-5">
   <div class="col-12 col-lg-4 text-center nav_responsive">
     <%= link_to(learn_path, class: 'nav-item') do %>
-      <%= image_tag('sherpa_icons-01.png', class: 'nav-icon') %>
-      <div class="nav-label">
+      <%= image_tag('sherpa_icons-01.png', class: 'nav-icon', alt: '' ) %>
+      <span class="nav-label">
         Learn About School Choice
-      </div>
+      </span>
     <% end %>
   </div>
   <div class="col-12 col-lg-4 text-center nav_responsive">
     <%= link_to(search_path, class: 'nav-item') do %>
-      <%= image_tag('sherpa_icons-02.png', class: 'nav-icon') %>
-      <div class="nav-label">
+      <%= image_tag('sherpa_icons-02.png', class: 'nav-icon', alt: '') %>
+      <span class="nav-label">
         Search for Schools
-      </div>
+      </span>
     <% end %>
   </div>
   <div class="col-12 col-lg-4 text-center nav_responsive">
-    <%= link_to(apply_path, class: 'nav-item') do %>
-      <%= image_tag('sherpa_icons-03.png', class: 'nav-icon') %>
-      <div class="nav-label">
+    <div class="nav-item">
+      <%= link_to(apply_path) do %>
+        <%= image_tag('sherpa_icons-03.png', class: 'nav-icon', alt: '') %>
+      <span class="nav-label">
         Apply to a School
-      </div>
-    <% end %>
+      </span>
+      <% end %>
+    </div>
   </div>
 </div>
 <div class="row">

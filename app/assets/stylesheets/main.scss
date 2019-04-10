@@ -76,6 +76,7 @@ $front_color: #89b0b0;
         }
 
         .nav-label {
+          display: block;
           background-color: $banner_color;
           color: $front_color;
           border-radius: 10px;

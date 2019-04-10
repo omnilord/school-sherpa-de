@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>School Sherpa DE, Proof of Concept</title>
+    <title>School Choice Delaware</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -22,7 +22,7 @@
       <div class="banner row">
         <div class="col-12 text-center p-3">
           <%= link_to(root_path,  class: 'titling') do %>
-            <%= image_tag('logo_title', height: 100, width: 300, alt: 'School Choice SHERPA') %>
+            <%= image_tag('logo_title', height: 100, width: 300, alt: 'School Choice Delaware Search') %>
             <h1>School Choice SHERPA</h1>
           <% end %>
         </div>
@@ -33,14 +33,16 @@
       <div class="banner row">
         <div class="col-12 text-center p-3">
           <%= link_to(root_path) do %>
-            <%= image_tag('logo', height: '70', width: '50') %>
+            <%= image_tag('logo', height: '70', width: '50', alt: 'School Choice Delaware Search') %>
           <% end %>
         </div>
       </div>
     </div>
 
-    <footer class="text-center">
-      Code is available at <a href="http://github.com/omnilord/school-sherpa-de">GitHub</a>. Contributors welcome!
+    <footer class="text-center small">
+      Site Design by Betsey Suchanic, Code by Eric L. Truitte, MBA.<br/>
+      Code is available at <a href="http://github.com/omnilord/school-sherpa-de">GitHub</a>. Contributors welcome!</br>
+      Cookies are not used for tracking purposes or to store information about end users.
     </footer>
   </body>
 </html>
