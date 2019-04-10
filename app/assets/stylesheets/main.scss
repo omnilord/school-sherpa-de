@@ -286,7 +286,7 @@ $front_color: #89b0b0;
     grid-area: prev;
 
     &:before {
-      content: 'Previous Step: ';
+      content: 'Previous: ';
     }
   }
 
@@ -294,7 +294,7 @@ $front_color: #89b0b0;
     grid-area: next;
 
     &:before {
-      content: 'Next Step: ';
+      content: 'Next: ';
     }
   }
 }
