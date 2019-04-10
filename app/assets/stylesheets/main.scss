@@ -95,6 +95,10 @@ $front_color: #89b0b0;
         display: block;
         padding: 5px;
         position: static;
+
+        .title {
+          text-decoration: underline;
+        }
       }
 
       .info-nav {
@@ -154,10 +158,16 @@ $front_color: #89b0b0;
 
     .learning-page-1 {}
     .learning-page-2 {}
-    .learning-page-3 {}
+    .learning-page-3 {
+      grid-gap: 10px;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+      grid-template-areas:
+        "h"
+        "l"
+        "r";
+    }
     .learning-page-4 {}
-    .learning-page-5 {}
-    .learning-page-6 {}
   }
 }
 
@@ -178,7 +188,6 @@ $front_color: #89b0b0;
     .learning-page-0 {
       grid-gap: 10px;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
       grid-template-areas:
         "l t"
         "l b";
@@ -186,10 +195,14 @@ $front_color: #89b0b0;
 
     .learning-page-1 {}
     .learning-page-2 {}
-    .learning-page-3 {}
+    .learning-page-3 {
+      grid-gap: 10px;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "h h"
+        "l r";
+    }
     .learning-page-4 {}
-    .learning-page-5 {}
-    .learning-page-6 {}
   }
 }
 
@@ -220,10 +233,25 @@ $front_color: #89b0b0;
   .learning-intro {}
   .learning-page-1 {}
   .learning-page-2 {}
-  .learning-page-3 {}
+  .learning-page-3 {
+    width: 100%;
+    display: grid !important;
+    justify-items: stretch;
+    align-items: stretch;
+
+    .learning-step-header {
+      grid-area: h;
+    }
+
+    .learning-left {
+      grid-area: l;
+    }
+
+    .learning-right {
+      grid-area: r;
+    }
+  }
   .learning-page-4 {}
-  .learning-page-5 {}
-  .learning-page-6 {}
 
   .learning-body {
     grid-area: body;
